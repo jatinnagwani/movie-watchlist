@@ -1,38 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movie Watchlist</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <header>
     <h1>🎬 Movie Watchlist</h1>
+    <button id="theme-btn">☀️ Light Mode</button>
   </header>
 
   <main>
 
-    <section class="search-section">
+    <section class="search-box">
       <input type="text" id="search-input" placeholder="Search for a movie..." />
       <button id="search-btn">Search</button>
     </section>
 
-    <section class="results-section">
-      <h2 id="section-title">Search Results</h2>
-      <div id="loading" class="hidden">Loading...</div>
-      <div id="movies-grid" class="movies-grid"></div>
+    <section class="filters">
+
+      <select id="genre-filter">
+        <option value="">All Genres</option>
+        <option value="Action">Action</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Animation">Animation</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+      </select>
+
+      <select id="sort-by">
+        <option value="">Sort By</option>
+        <option value="rating">⭐ Rating (High to Low)</option>
+        <option value="year">📅 Year (Newest First)</option>
+        <option value="title">🔤 Title (A-Z)</option>
+      </select>
+
     </section>
 
-    <section class="watchlist-section">
+    <section class="results">
+      <h2 id="results-title">Search Results</h2>
+      <p id="loading" class="hidden">Fetching movies...</p>
+      <div id="movies-grid" class="grid"></div>
+    </section>
+
+    <section class="watchlist">
+
       <h2>My Watchlist</h2>
-      <div id="watchlist-grid" class="movies-grid"></div>
-      <p id="empty-watchlist">Your watchlist is empty. Start adding movies!</p>
+      <div id="watchlist-grid" class="grid"></div>
+      <p id="empty-msg">Nothing here yet. Add some movies!</p>
+
+    </section>
+
+        <!-- favourite movies -->
+    <section class="watchlist">
+      <h2>My Favourites ❤️</h2>
+      <div id="favorites-grid" class="grid"></div>
+      <p id="empty-fav">No favourites yet. Hit the 🤍 button to save some!</p>
     </section>
 
   </main>
 
   <script src="script.js"></script>
+
 </body>
+
 </html>
