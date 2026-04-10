@@ -333,10 +333,10 @@ function applyFilter() {
 
 function toggleWatchlist(imdbID) {
 
-  // saare possible sources combine karo
+
   const allSources = [...allMovies, ...sliderData, ...watchlist, ...favorites, ...watched]
 
-  // movie dhundo
+
   const movie = allSources.find(m => m.imdbID === imdbID)
 
   const exists = watchlist.some(w => w.imdbID === imdbID)
@@ -371,7 +371,7 @@ async function renderWatchlist() {
 
   try {
 
-    // saare fetch ek saath
+
     const requests = watchlist.map(item =>
       fetch(`${BASE_URL}?i=${item.imdbID}&apikey=${API_KEY}`)
         .then(res => res.json())
@@ -587,7 +587,7 @@ function addToCompare(imdbID) {
   const already = compareList.some(c => c.imdbID === imdbID)
 
   if (already) {
-    // remove it
+
     compareList = compareList.filter(c => c.imdbID !== imdbID)
   } else {
 
@@ -810,10 +810,10 @@ async function fetchMoodMovies(mood) {
 
 }
 
-// helper to add to watchlist from sections outside main search
+
 function quickAddWatchlist(imdbID, btnEl) {
 
-  // check all possible sources
+
   const allSources = [...allMovies, ...sliderData]
   let movie = allSources.find(m => m.imdbID === imdbID)
 
@@ -851,7 +851,7 @@ async function fetchLangMovies(lang) {
 
   const query = moviesToSearch[lang] || lang
 
-  // scroll to search results
+
   document.getElementById("results-title").textContent = `${lang} Movies`
   document.getElementById("movies-grid").innerHTML = ""
   loadingEl.classList.remove("hidden")
@@ -881,7 +881,7 @@ async function fetchLangMovies(lang) {
 
     renderMovies(langFiltered.length ? langFiltered : allMovies)
 
-    // scroll to results
+
     document.querySelector(".results").scrollIntoView({ behavior: "smooth" })
 
   } catch (err) {
@@ -946,7 +946,7 @@ async function fetchTop10(genre) {
 
     const movies = await Promise.all(requests)
 
-    // sort by rating using sort() HOF
+
     const sorted = movies.sort((a, b) =>
       parseFloat(b.imdbRating || 0) - parseFloat(a.imdbRating || 0)
     )
@@ -1016,7 +1016,7 @@ async function fetchLatest() {
 
     const movies = await Promise.all(requests)
 
-    // sort by year desc using sort() HOF
+
     const sorted = movies.sort((a, b) => parseInt(b.Year || 0) - parseInt(a.Year || 0))
 
     sorted.forEach(movie => {
@@ -1080,7 +1080,7 @@ themeBtn.addEventListener("click", () => {
 
 })
 
-// remember theme on reload
+
 if (localStorage.getItem("theme") === "light") {
   document.body.classList.add("light")
   themeBtn.textContent = "🌙 Dark Mode"
@@ -1110,7 +1110,7 @@ searchInput.addEventListener("keydown", e => {
 })
 
 
-// filter dropdowns
+
 genreFilter.addEventListener("change", applyFilter)
 sortBy.addEventListener("change", applyFilter)
 langFilter.addEventListener("change", applyFilter)
