@@ -4,24 +4,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Watchlist</title>
+  <title>CineVault 🎬</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
   <header>
-    <h1>🎬 Movie Watchlist</h1>
-    <button id="theme-btn">☀️ Light Mode</button>
+    <h1>🎬 CineVault</h1>
+    <div class="header-btns">
+      <button id="theme-btn">☀️ Light Mode</button>
+    </div>
   </header>
+
+
+  <!-- hero slider -->
+  <section class="hero-slider">
+    <div class="slider-track" id="slider-track"></div>
+
+    <button class="slider-arrow left" id="prev-slide">&#8592;</button>
+    <button class="slider-arrow right" id="next-slide">&#8594;</button>
+
+    <div class="slider-dots" id="slider-dots"></div>
+
+    <div class="slider-thumbnails" id="slider-thumbnails"></div>
+  </section>
+
 
   <main>
 
+    <!-- search bar -->
     <section class="search-box">
       <input type="text" id="search-input" placeholder="Search for a movie..." />
       <button id="search-btn">Search</button>
     </section>
 
+
+    <!-- filters row -->
     <section class="filters">
 
       <select id="genre-filter">
@@ -43,30 +62,167 @@
         <option value="title">🔤 Title (A-Z)</option>
       </select>
 
+      <select id="lang-filter">
+        <option value="">All Languages</option>
+        <option value="Hindi">🇮🇳 Hindi</option>
+        <option value="English">🇺🇸 English</option>
+        <option value="Korean">🇰🇷 Korean</option>
+        <option value="Japanese">🇯🇵 Japanese</option>
+        <option value="Spanish">🇪🇸 Spanish</option>
+      </select>
+
     </section>
 
+
+    <!-- search results -->
     <section class="results">
       <h2 id="results-title">Search Results</h2>
-      <p id="loading" class="hidden">Fetching movies...</p>
+      <p id="loading" class="hidden">🍿 Fetching movies...</p>
       <div id="movies-grid" class="grid"></div>
     </section>
 
-    <section class="watchlist">
 
-      <h2>My Watchlist</h2>
-      <div id="watchlist-grid" class="grid"></div>
-      <p id="empty-msg">Nothing here yet. Add some movies!</p>
-
+    <!-- movie comparison -->
+    <section class="comparison-section">
+      <h2>⚔️ Movie Comparison Mode</h2>
+      <p class="section-desc">Search a movie and click "Compare" on any two cards to see them head to head.</p>
+      <div class="compare-slots">
+        <div class="compare-slot" id="compare-slot-1">
+          <p>Pick Movie 1</p>
+        </div>
+        <div class="compare-vs">VS</div>
+        <div class="compare-slot" id="compare-slot-2">
+          <p>Pick Movie 2</p>
+        </div>
+      </div>
+      <button id="do-compare-btn" class="compare-go-btn hidden">⚔️ Compare Now!</button>
+      <div id="compare-result" class="compare-result hidden"></div>
     </section>
 
-        <!-- favourite movies -->
+
+    <!-- mood picker -->
+    <section class="mood-section">
+      <h2>🎭 What's Your Mood?</h2>
+      <p class="section-desc">Pick a vibe and we'll suggest movies for you.</p>
+      <div class="mood-btns">
+        <button class="mood-btn" onclick="fetchMoodMovies('happy')">😂 Happy</button>
+        <button class="mood-btn" onclick="fetchMoodMovies('sad')">😢 Sad</button>
+        <button class="mood-btn" onclick="fetchMoodMovies('scared')">😱 Scared</button>
+        <button class="mood-btn" onclick="fetchMoodMovies('romantic')">❤️ Romantic</button>
+        <button class="mood-btn" onclick="fetchMoodMovies('thriller')">🔥 Thriller</button>
+        <button class="mood-btn" onclick="fetchMoodMovies('adventure')">🗺️ Adventure</button>
+      </div>
+      <p id="mood-loading" class="hidden">Finding movies for your mood...</p>
+      <div id="mood-grid" class="grid"></div>
+    </section>
+
+
+    <!-- language cards -->
+    <section class="lang-section">
+      <h2>🌍 Browse by Language</h2>
+      <div class="lang-cards" id="lang-cards">
+
+        <div class="lang-card" style="background-image: url('https://m.media-amazon.com/images/M/MV5BZGVmMjNmZTItMDI5My00YjNiLWI4NTUtNTcxMGZmZmZmZmZmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg');" onclick="fetchLangMovies('Hindi')">
+          <div class="lang-overlay">
+            <span class="lang-native">हिन्दी</span>
+            <span class="lang-name">Hindi</span>
+          </div>
+        </div>
+
+        <div class="lang-card" style="background-image: url('https://m.media-amazon.com/images/M/MV5BMjI0MTg3MzI0M15BMl5BanBnXkFtZTcwMzQyODU2Mw@@._V1_SX300.jpg');" onclick="fetchLangMovies('English')">
+          <div class="lang-overlay">
+            <span class="lang-native">English</span>
+            <span class="lang-name">English</span>
+          </div>
+        </div>
+
+        <div class="lang-card" style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGE3ZTNjYzMtNzU3OS00MmZiLWJjZWYtMzU4MDZjMzQ1ZWZlXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg');" onclick="fetchLangMovies('Korean')">
+          <div class="lang-overlay">
+            <span class="lang-native">한국어</span>
+            <span class="lang-name">Korean</span>
+          </div>
+        </div>
+
+        <div class="lang-card" style="background-image: url('https://m.media-amazon.com/images/M/MV5BZjI4ZDkwMjItZGM5OC00OTViLWJhZDMtMWNiYzEyYmJiYzVhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg');" onclick="fetchLangMovies('Japanese')">
+          <div class="lang-overlay">
+            <span class="lang-native">日本語</span>
+            <span class="lang-name">Japanese</span>
+          </div>
+        </div>
+
+        <div class="lang-card" style="background-image: url('https://m.media-amazon.com/images/M/MV5BMTg4NjM3NjUxOV5BMl5BanBnXkFtZTgwNTY2NzEyMzE@._V1_SX300.jpg');" onclick="fetchLangMovies('Spanish')">
+          <div class="lang-overlay">
+            <span class="lang-native">Español</span>
+            <span class="lang-name">Spanish</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- genre sections top 10 -->
+    <section class="genre-sections">
+      <h2>🏆 Top 10 by Genre</h2>
+
+      <div class="genre-tab-btns">
+        <button class="genre-tab active" onclick="switchGenreTab('Comedy', this)">😂 Comedy</button>
+        <button class="genre-tab" onclick="switchGenreTab('Horror', this)">😱 Horror</button>
+        <button class="genre-tab" onclick="switchGenreTab('Action', this)">💥 Action</button>
+        <button class="genre-tab" onclick="switchGenreTab('Romance', this)">❤️ Romance</button>
+        <button class="genre-tab" onclick="switchGenreTab('Thriller', this)">🔪 Thriller</button>
+      </div>
+
+      <p id="genre-loading" class="hidden">Loading...</p>
+      <div id="genre-grid" class="grid"></div>
+    </section>
+
+
+    <!-- latest releases -->
+    <section class="latest-section">
+      <h2>🆕 Latest Releases</h2>
+      <p id="latest-loading" class="hidden">Loading latest movies...</p>
+      <div id="latest-grid" class="grid"></div>
+    </section>
+
+
+    <!-- my watchlist -->
     <section class="watchlist">
-      <h2>My Favourites ❤️</h2>
+      <div class="section-header">
+        <h2>📋 My Watchlist</h2>
+        <button id="random-btn" onclick="randomMovieNight()">🎲 Random Movie Night</button>
+      </div>
+      <div id="watchlist-grid" class="grid"></div>
+      <p id="empty-msg">Nothing here yet. Add some movies!</p>
+    </section>
+
+
+    <!-- my favourites -->
+    <section class="watchlist">
+      <h2>💛 My Favourites</h2>
       <div id="favorites-grid" class="grid"></div>
       <p id="empty-fav">No favourites yet. Hit the 🤍 button to save some!</p>
     </section>
 
+
+    <!-- already watched -->
+    <section class="watchlist">
+      <h2>✅ Already Watched</h2>
+      <div id="watched-grid" class="grid"></div>
+      <p id="empty-watched">Nothing marked as watched yet.</p>
+    </section>
+
   </main>
+
+
+  <!-- comparison modal -->
+  <div id="compare-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeCompareModal()">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
 
   <script src="script.js"></script>
 
